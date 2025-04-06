@@ -7,8 +7,44 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-1">
+            <a class="navbar-brand" href="index.html">
+                <i class="fab fa-js-square me-2"></i>JS Course
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#modules">Módulos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projetos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#resources">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    
     <div class="container">
         <h1>App do Clima Avançado</h1>
         <div class="search-box">
@@ -16,30 +52,56 @@
             <button id="search-button"><i class="fas fa-search"></i></button>
             <button id="location-button"><i class="fas fa-map-marker-alt"></i> Usar minha localização</button>
         </div>
-        <div class="weather-info">
+        
+        <div class="weather-display">
             <div class="location">
                 <i class="fas fa-map-marker-alt"></i>
                 <span id="city">--</span>, <span id="country">--</span>
             </div>
+            
             <div class="temperature">
                 <img id="weather-icon" src="" alt="Ícone do Clima">
                 <span id="temp">--</span>°C
                 <span id="description">--</span>
             </div>
+        </div>
+        
+        <div class="weather-details">
             <div class="details">
                 <div><i class="fas fa-thermometer-half"></i> Sensação Térmica: <span id="feels-like">--</span>°C</div>
                 <div><i class="fas fa-tint"></i> Umidade: <span id="humidity">--</span>%</div>
                 <div><i class="fas fa-wind"></i> Vento: <span id="wind-speed">--</span> m/s</div>
             </div>
+            
             <div class="additional-info">
                 <div><i class="fas fa-cloud-rain"></i> Chuva: <span id="rain">--</span> mm</div>
                 <div><i class="fas fa-cloud-sun"></i> Nuvens: <span id="clouds">--</span>%</div>
                 <div><i class="fas fa-sun"></i> Nascer do Sol: <span id="sunrise">--</span></div>
                 <div><i class="fas fa-moon"></i> Pôr do Sol: <span id="sunset">--</span></div>
             </div>
-            <div class="error-message" id="error-message"></div>
         </div>
+        
+        <div class="error-message" id="error-message"></div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+          <div class="footer-links">
+            <a href="#home">Início</a>
+            <a href="#modules">Módulos</a>
+            <a href="#projects">Projetos</a>
+            <a href="#contact">Contato</a>
+          </div>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <p>&copy; 2025 App do Clima. Todos os direitos reservados a Nilson Gomes.</p>
+        </div>
+      </footer>
 
     <script src="script.js"></script>
 </body>

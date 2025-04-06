@@ -16,9 +16,10 @@ const cloudsElement = document.getElementById('clouds');
 const sunriseElement = document.getElementById('sunrise');
 const sunsetElement = document.getElementById('sunset');
 
-const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual API key
+// Substitua pela sua chave de API real
+const apiKey = 'SUA_CHAVE_DE_API_AQUI'; 
 const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
-const weatherIconsBaseUrl = 'https://openweathermap.org/img/wn/'; // Base URL for weather icons
+const weatherIconsBaseUrl = 'https://openweathermap.org/img/wn/';
 
 async function getWeatherData(query) {
     try {
@@ -29,30 +30,38 @@ async function getWeatherData(query) {
             updateWeatherInfo(data);
             errorMessageElement.textContent = '';
         } else {
-            errorMessageElement.textContent = 'Cidade não encontrada.';
-            resetWeatherInfo();
+            throw new Error(data.message || 'Cidade não encontrada');
         }
     } catch (error) {
         console.error('Erro ao buscar dados do clima:', error);
-        errorMessageElement.textContent = 'Erro ao buscar dados do clima.';
+        errorMessageElement.textContent = error.message || 'Erro ao buscar dados do clima.';
         resetWeatherInfo();
     }
 }
 
 function updateWeatherInfo(data) {
+    // Atualiza localização
     cityElement.textContent = data.name;
     countryElement.textContent = data.sys.country;
+    
+    // Atualiza temperatura e descrição
     tempElement.textContent = Math.round(data.main.temp);
-    descriptionElement.textContent = data.weather[0].description;
+    descriptionElement.textContent = data.weather[0].description.charAt(0).toUpperCase() + 
+                                    data.weather[0].description.slice(1);
+    
+    // Atualiza ícone do tempo
+    const iconCode = data.weather[0].icon;
+    weatherIconElement.src = `${weatherIconsBaseUrl}${iconCode}@4x.png`;
+    weatherIconElement.alt = data.weather[0].description;
+    weatherIconElement.style.display = 'block';
+    
+    // Atualiza detalhes
     feelsLikeElement.textContent = Math.round(data.main.feels_like);
     humidityElement.textContent = data.main.humidity;
-    windSpeedElement.textContent = data.wind.speed;
-
-    const iconCode = data.weather[0].icon;
-    weatherIconElement.src = `${weatherIconsBaseUrl}${iconCode}@4x.png`; // Constructing icon URL
-    weatherIconElement.alt = data.weather[0].description;
-
-    rainElement.textContent = data.rain && data.rain['1h'] ? `${data.rain['1h']}` : '--';
+    windSpeedElement.textContent = (data.wind.speed).toFixed(1);
+    
+    // Atualiza informações adicionais
+    rainElement.textContent = data.rain ? (data.rain['1h'] || '0') : '0';
     cloudsElement.textContent = data.clouds.all;
     sunriseElement.textContent = formatTime(data.sys.sunrise);
     sunsetElement.textContent = formatTime(data.sys.sunset);
@@ -63,11 +72,13 @@ function resetWeatherInfo() {
     countryElement.textContent = '--';
     tempElement.textContent = '--';
     descriptionElement.textContent = '--';
+    weatherIconElement.src = '';
+    weatherIconElement.style.display = 'none';
+    
     feelsLikeElement.textContent = '--';
     humidityElement.textContent = '--';
     windSpeedElement.textContent = '--';
-    weatherIconElement.src = '';
-    weatherIconElement.alt = '';
+    
     rainElement.textContent = '--';
     cloudsElement.textContent = '--';
     sunriseElement.textContent = '--';
@@ -76,23 +87,21 @@ function resetWeatherInfo() {
 
 function formatTime(timestamp) {
     const date = new Date(timestamp * 1000);
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
+    return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 }
 
+// Event Listeners
 searchButton.addEventListener('click', () => {
     const city = cityInput.value.trim();
     if (city) {
-        getWeatherData(`q=${city}`);
+        getWeatherData(`q=${encodeURIComponent(city)}`);
     } else {
         errorMessageElement.textContent = 'Por favor, digite uma cidade.';
-        resetWeatherInfo();
     }
 });
 
-cityInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
+cityInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
         searchButton.click();
     }
 });
@@ -100,19 +109,20 @@ cityInput.addEventListener('keypress', (event) => {
 locationButton.addEventListener('click', () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-            async (position) => {
+            (position) => {
                 const { latitude, longitude } = position.coords;
                 getWeatherData(`lat=${latitude}&lon=${longitude}`);
             },
             (error) => {
-                errorMessageElement.textContent = 'Erro ao obter a localização.';
+                errorMessageElement.textContent = 'Erro ao obter localização: ' + error.message;
                 console.error('Erro de geolocalização:', error);
-            }
+            },
+            { timeout: 10000 }
         );
     } else {
-        errorMessageElement.textContent = 'Geolocalização não suportada pelo seu navegador.';
+        errorMessageElement.textContent = 'Geolocalização não suportada pelo navegador.';
     }
 });
 
-// Initial load (optional - try to get user's location)
-locationButton.click();
+// Inicialização
+resetWeatherInfo();
