@@ -1,15 +1,178 @@
+/* style.css */
 body {
-    background-color: #f4f6f9;
-    font-family: 'Arial', sans-serif;
-    color: #333;
+  font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(to bottom, #34495e, #2c3e50); /* Gradient background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  color: #ecf0f1;
+  overflow: hidden; /* Prevent scrollbar for background animation */
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); /* More pronounced shadow */
+  text-align: center;
+  width: 90%;
+  max-width: 650px;
+  backdrop-filter: blur(10px); /* Glassmorphism effect */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h1 {
+  color: #fff;
+  margin-bottom: 40px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+  font-size: 2.5em;
+}
+
+.search-box {
+  display: flex;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.search-box input[type="text"] {
+  flex-grow: 1;
+  padding: 15px 20px;
+  border: none;
+  font-size: 18px;
+  color: #333;
+  background-color: rgba(255, 255, 255, 0.9);
+  outline: none;
+}
+
+.search-box button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+  outline: none;
+}
+
+.search-box button:hover {
+  background-color: #2980b9;
+}
+
+#location-button {
+  background-color: #f39c12;
+  margin-left: 15px;
+  border-radius: 10px;
+  padding: 15px 20px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+  outline: none;
+}
+
+#location-button:hover {
+  background-color: #e67e22;
+}
+
+.weather-info {
+  margin-top: 40px;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.location {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+.location i {
+  margin-right: 10px;
+}
+
+.temperature {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+#weather-icon {
+  width: 120px;
+  height: 120px;
+  margin-right: 25px;
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.4));
+}
+
+#temp {
+  font-size: 3.5em;
+  font-weight: bold;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+  color: #fff;
+}
+
+#description {
+  font-size: 1.8em;
+  margin-left: 20px;
+  text-transform: capitalize;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #ddd;
+}
+
+.details, .additional-info {
+  color: #eee;
+  line-height: 2.2;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.details i, .additional-info i {
+  margin-right: 10px;
+  color: #81d4fa; /* Lighter blue for icons */
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Background animation (subtle) */
+body::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, #2980b9, #3498db, #2980b9, #3498db);
+  z-index: -1;
+  animation: animate 8s linear infinite;
+  background-size: 400% 400%;
+}
+
+@keyframes animate {
+  0% {
+      background-position: 0% 50%;
   }
-  
-  h1 {
-    color: #007bff;
+  50% {
+      background-position: 100% 50%;
   }
-  
-  #weather-icon {
-    font-size: 50px;
-    margin-top: 10px;
+  100% {
+      background-position: 0% 50%;
   }
-  
+}
